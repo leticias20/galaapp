@@ -3,6 +3,8 @@ package com.org.galaapp.controller;
 import com.org.galaapp.entity.Producto;
 import com.org.galaapp.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,17 +29,19 @@ public class ProductoController {
         return productoService.agregarProducto(producto);
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Producto> obtenerProductoPorId(@PathVariable Integer id) {
-//        return productoService.obtenerProductoPorId(id)
-//                .map(ResponseEntity::ok)
-//                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-//    }
-//
-//    @PostMapping
-//    public Producto crearProducto(@RequestBody Producto producto) {
-//        return productoService.guardarProducto(producto);
-//    }
+    //Eliminar un producto
+    @DeleteMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:8080")
+    public ResponseEntity<String> eliminarProducto(@PathVariable Integer id) {
+        try {
+            productoService.eliminarProducto(id);
+            return ResponseEntity.ok("Producto eliminado correctamente");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
+
+
 //
 //    @PutMapping("/{id}")
 //    public ResponseEntity<Producto> actualizarProducto(@PathVariable Long id, @RequestBody Producto producto) {
@@ -49,13 +53,5 @@ public class ProductoController {
 //                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 //    }
 //
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
-//        if (productoService.obtenerProductoPorId(id).isPresent()) {
-//            productoService.eliminarProducto(id);
-//            return ResponseEntity.ok().build();
-//        } else {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//        }
-//    }
+
 }
