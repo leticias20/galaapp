@@ -14,9 +14,17 @@ public class ProductoController {
     @Autowired
     private ProductoService productoService;
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping
     public List<Producto> obtenerTodosLosProductos() {
         return productoService.obtenerTodosLosProductos();
+    }
+
+    // Agregar un producto
+    @CrossOrigin(origins = "http://localhost:8080")
+    @PostMapping
+    public Producto agregarProducto(@RequestBody Producto producto) {
+        return productoService.agregarProducto(producto);
     }
 
 //    @GetMapping("/{id}")
