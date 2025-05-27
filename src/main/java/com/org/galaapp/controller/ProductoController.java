@@ -41,17 +41,24 @@ public class ProductoController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Producto> obtenerProductoPorId(@PathVariable Integer id) {
+        return productoService.obtenerProductoPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
 
-//
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Producto> actualizarProducto(@PathVariable Long id, @RequestBody Producto producto) {
-//        return productoService.obtenerProductoPorId(id)
-//                .map(productoExistente -> {
-//                    producto.setIdProducto(id);
-//                    return ResponseEntity.ok(productoService.guardarProducto(producto));
-//                })
-//                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-//    }
-//
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Producto> actualizarProducto(@PathVariable Integer id, @RequestBody Producto producto) {
+        return productoService.obtenerProductoPorId(id)
+                .map(productoExistente -> {
+                    producto.setIdProducto(id); // importante para mantener el ID original
+                    return ResponseEntity.ok(productoService.agregarProducto(producto));
+                })
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
 
 }
