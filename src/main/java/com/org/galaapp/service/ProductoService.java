@@ -37,6 +37,14 @@ public class ProductoService {
         }
     }
 
+    // src/main/java/com/org/galaapp/service/ProductoService.java
+    public Producto actualizarCantidad(Integer id, Integer cantidad) {
+        Producto producto = obtenerProductoPorId(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        producto.setCantidad(cantidad);
+        return agregarProducto(producto);
+    }
+
 
 
 //    public Optional<Producto> obtenerProductoPorId(Integer id) {

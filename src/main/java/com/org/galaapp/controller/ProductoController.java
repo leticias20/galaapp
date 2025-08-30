@@ -60,5 +60,15 @@ public class ProductoController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
+    @PutMapping("/{id}/cantidad")
+    public ResponseEntity<Producto> actualizarCantidadProducto(@PathVariable Integer id, @RequestBody Producto producto) {
+        try {
+            Producto actualizado = productoService.actualizarCantidad(id, producto.getCantidad());
+            return ResponseEntity.ok(actualizado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
 
 }
